@@ -16,6 +16,5 @@ else
 #else update info
   #prompt user for input
   puts "You have not set your strengths and weaknesses yet. Please set them below."
-  puts " "
   update_info(name)
 end
