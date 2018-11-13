@@ -11,6 +11,7 @@ users.each do |user|
   puts "Enter your weakness"
   wkn = gets
   User.create(name: nam, strength: str, weakness: wkn)
+  
 end
 
 binding.pry
