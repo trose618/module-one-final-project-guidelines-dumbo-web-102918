@@ -1,7 +1,8 @@
-users = ["Manny","Anik"]
-users.each do |user|
-  User.create(name: user)
-end
+
+User.create(name: "Rob", strength: "oo", weakness: "ActiveRecord")
+User.create(name: "Terrance", strength: "ActiveRecord", weakness: "chicken")
+
+Match.create(user: User.first, buddy: User.last)
 
 # user1 = User.first
 # user2 = User.last
