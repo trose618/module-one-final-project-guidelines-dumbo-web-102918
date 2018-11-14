@@ -1,16 +1,22 @@
+Skill.destroy_all
+ActiveRecord::Base.connection.execute("Delete from skills")
+ActiveRecord::Base.connection.execute("DELETE FROM SQLITE_SEQUENCE WHERE name='skills'")
 
-User.create(name: "Rob", strength: "oo", weakness: "ActiveRecord")
-User.create(name: "Terrance", strength: "ActiveRecord", weakness: "chicken")
+User.destroy_all # Only necessary if you want to trigger callbacks.
+ActiveRecord::Base.connection.execute("Delete from users")
+ActiveRecord::Base.connection.execute("DELETE FROM SQLITE_SEQUENCE WHERE name='users'")
 
-Match.create(user: User.first, buddy: User.last)
+Match.destroy_all # Only necessary if you want to trigger callbacks.
+ActiveRecord::Base.connection.execute("Delete from matches")
+ActiveRecord::Base.connection.execute("DELETE FROM SQLITE_SEQUENCE WHERE name='matches'")
 
-# user1 = User.first
-# user2 = User.last
-#
-# user1.save
-# user2.save
-#
-# match1 = Match.create(user_id: user1, buddy_id: user2)
-# match1.save
+UserSkill.destroy_all
+ActiveRecord::Base.connection.execute("Delete from user_skills")
+ActiveRecord::Base.connection.execute("DELETE FROM SQLITE_SEQUENCE WHERE name='user_skills'")
 
+Skill.create(name: "Ruby Fundamentals")
+Skill.create(name: "API/JSON")
+Skill.create(name: "Object Oriented Ruby")
+Skill.create(name: "SQL")
+Skill.create(name: "ActiveRecord")
 puts "Done~!"
