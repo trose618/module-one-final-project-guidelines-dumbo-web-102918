@@ -1,32 +1,38 @@
 def books
-
   puts "
-                                         `..
-                                  `-/+shmNNNmdys+/-`
-                            .:+shdNNNNmmmmmmmmmmmmmmmdys+/-.`
-                     `-/oydmNNNmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdy+`
-               .:+shmNNNmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdhso//`
-          -+ydmNNmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdhso///::::`
-          d/:+syhdmmmmmmmmmmmmmmmmmmmmmmmmmmmmmhyso/////////////.
-          y:.....-:+sydmmmmmmmmmmmmmmmmmmdhso+///////////+oys+/.
-          :o-..........-/+syddmmmmmmdyso///::::://///oshddhys/.
-          `-ohys/-...........-:+ss+///:::::::::/+syhdhyssssssss+-
-        oooosshhyyyys+:-........-::::::::::+oyhdhyssooooo+++++//
-        s::/++oso:++osyyys+/-...-:::::/oyhhyso+////::::::://///+-
-        -+--:///+/:oooossssyhhyo//oshddhhyyysoooooooosssssssso/-`
-      -:+so:--://+/:/+++++osyhdmmNNNNmmmdhhyyssoooossssssssssymmmdyo+:`
-     -yoyhhyo:---:+ooooo++++oosyhhhyysssooooo++++++oosyhhddddddhyoodhs.
-     `s+//oyhyo:-.-:///++ooosssoooooooooooooossyhhdddddddhys+///+syyo-
-    .oydhs+::+sy+:..-++oooo+++++++ossyyhdddddddddddhyso+/:/osydmy+.
-    .yyyyhdhs/-:+o+:-/////+oosyyhdddddddddddddhyso///+oshhddds:`
-      `:+syyyhhs/-://osyhhdhhhhhhhhhhhhhhhyso+/+osydmddddy+.
-           -/oyyyyo/-:/oyhhhhhhhhhhhysso++osyhmmmmdhdhs:`
-               .:oydhs/--/oyhhyysoo+osyhdmmmmddhhdy+-
-                   `-+shs/--://+sydmmmmddddhhdhs:`
-                        ./++shdmmmdddddhhhdy+-
-                            `:ohdhhhhhhhs/`
-                                 ./oy+-
-                                                                       .---"
+  ______    __                      __                  _______                   __        __
+ /      \  /  |                    /  |                /       \                 /  |      /  |
+/$$$$$$  |_$$ |_    __    __   ____$$ | __    __       $$$$$$$  | __    __   ____$$ |  ____$$ | __    __
+$$ \__$$// $$   |  /  |  /  | /    $$ |/  |  /  |      $$ |__$$ |/  |  /  | /    $$ | /    $$ |/  |  /  |
+$$      \$$$$$$/   $$ |  $$ |/$$$$$$$ |$$ |  $$ |      $$    $$< $$ |  $$ |/$$$$$$$ |/$$$$$$$ |$$ |  $$ |
+ $$$$$$  | $$ | __ $$ |  $$ |$$ |  $$ |$$ |  $$ |      $$$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |
+/  \__$$ | $$ |/  |$$ \__$$ |$$ \__$$ |$$ \__$$ |      $$ |__$$ |$$ \__$$ |$$ \__$$ |$$ \__$$ |$$ \__$$ |
+$$    $$/  $$  $$/ $$    $$/ $$    $$ |$$    $$ |      $$    $$/ $$    $$/ $$    $$ |$$    $$ |$$    $$ |
+ $$$$$$/    $$$$/   $$$$$$/   $$$$$$$/  $$$$$$$ |      $$$$$$$/   $$$$$$/   $$$$$$$/  $$$$$$$/  $$$$$$$ |
+                                       /  \__$$ |                                              /  \__$$ |
+                                       $$    $$/                                               $$    $$/
+                                        $$$$$$/                                                 $$$$$$/
+"
+  puts " "
+  puts "                      ....``
+                    `/ssssssssooo++///::--...``
+                   :sssssssssssssssssssssssssso`
+                 -ossssssssssssssssssssssssss+.
+               .+sssssssssssssssssssssssssss/-:-
+             `/ssssssssssssssssssssssssssss:-:/`
+            :sssssssssssssssssssssssssssso:-/:
+          -osssssssssssssssssssssssssyyso--+-
+        .+ssssssssssssssssssssssyyyyyys+.-+.
+      `/ssssssssssssssssssyyyyyyyyyyys/.:+`
+     :sssssssssssssssyyyyyyyyyyyyyyys-.//`
+   .ossssssssssyyyyyyyyyyyyyyyyyyyyo--+:
+ `+sssssssyyyyyyyyyyyyyyyyyyyyyyyy+.-+.
+ .o++++oooosssyyyyyyyyyyyyyyyyyyy/.:+.
+ `///+++////////+++ooossyyyyyyys:.//`
+     ``.-::////////////////+++/-.+:`
+            ```.--:://////////--o-
+                    ```..-::://+.
+                             ``                   "
 
 end
 
