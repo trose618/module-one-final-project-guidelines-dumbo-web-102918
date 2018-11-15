@@ -43,6 +43,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.7)
     timers (4.2.0)
+    tts (0.7.1)
     tty-color (0.4.3)
     tty-cursor (0.6.0)
     tty-prompt (0.17.2)
@@ -68,7 +69,8 @@ DEPENDENCIES
   require_all
   sinatra-activerecord
   sqlite3
+  tts
   tty-prompt
 
 BUNDLED WITH
-   1.16.6
+   1.17.1

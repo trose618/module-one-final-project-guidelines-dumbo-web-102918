@@ -1,13 +1,15 @@
-programming_topics = ["Ruby Fundamentals", "Object Oriented Ruby", "SQL", "ORMs/ActiveRecord"]
-
 def welcome
-  "Welcome to Study Buddy!!! 🤓"
+  puts " "
+  puts "Welcome to Study Buddy!!! 🤓"
+  "Welcome to Study Buddy!".play
 end
 
 def get_name
   puts " "
   prompt = TTY::Prompt.new
-  prompt.ask('What is your name?')
+  name = prompt.ask("What is your first name?", "What is your first name?".play)
+  "Hi #{name}!".play
+  name
 end
 
 def user_exist?(name)
@@ -18,8 +20,11 @@ end
 def update_info(name)
   system "clear"
   puts " "
+  puts "What do you want to update? You can change your strengths, weakness, or go back."
+  "What do you want to update?".play
   prompt = TTY::Prompt.new
-  command = prompt.select("What do you want to update?", ["Strength 💪🏼", "Weakness 😫", "Go Back"])
+
+  command = prompt.select(" ", ["Strength 💪🏼", "Weakness 😫", "Go Back"])
 
   case command
   when "Strength 💪🏼"
@@ -34,8 +39,10 @@ end
 def menu_screen(name)
   display_skills(name) if user_exist?(name)
   puts " "
+  puts "What would you like to do? You can update your skills, display study matches, or quit."
+  "What would you like to do?".play
   prompt = TTY::Prompt.new
-  command = prompt.select("What would you like to do?", ["Update Skills", "Display Matches", "Quit"])
+  command = prompt.select(" ", ["Update Skills", "Display Matches", "Quit"])
   case command
   when "Update Skills"
     update_info(name)
@@ -43,6 +50,7 @@ def menu_screen(name)
     display_buddies(name)
   when "Quit"
     puts "Session Ended"
+    "Ending session".play
     exit
   end
 end
@@ -50,7 +58,7 @@ end
 def get_user_skills(name)
   user_skill_array = UserSkill.all.select { |userskill|
     userskill.user_id == User.find_by(name: name).id
-  }
+  }.map { |us| Skill.find_by(id: us.skill_id).name}
 end
 
 def display_skills(name)
@@ -58,9 +66,7 @@ def display_skills(name)
   #UserSkill.all.select
   puts "Your Strengths: 💪🏼"
 
-  strength_array = get_user_skills(name).map { |us| Skill.find_by(id: us.skill_id).name}
-
-    strength_array.each { |str|
+  get_user_skills(name).each { |str|
       puts str
     }
 
@@ -76,12 +82,26 @@ end
 def update_strength(name)
   system "clear"
   puts " "
+  puts "What skills are you comfortable with now? You can choose more than one. (Use arrow keys, press Space to select and Enter to finish)"
+  "What skills are you comfortable with now?".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
-  choices = prompt.multi_select("What skills are you comfortable with now?", skills)
-  destroy_str_associations(name)
-  choices.each do |choice|
-    UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
+  choices = prompt.multi_select(" ", skills)
+  if choices.empty?
+    puts "Please select your skill(s), or would you like to return to the main menu?"
+    "Please select your skills, or would you like to return to the main menu?".play
+    prompt = TTY::Prompt.new
+    command = prompt.select(" ", ["Update Strength", "Main Menu"])
+    if command == "Update Strength"
+      update_strength(name)
+    else
+      menu_screen(name)
+    end
+  else
+    destroy_str_associations(name)
+    choices.each do |choice|
+      UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
+    end
   end
   menu_screen(name)
 end
@@ -90,15 +110,26 @@ def update_weakness(name)
   #display_skills(name)
   system "clear"
   puts " "
+  puts "What skill are you least comfortable with?"
+  "What skill are you least comfortable with?".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
-  command = prompt.select("What are you least comfortable with?", skills)
-  User.find_by(name: name).update(weakness: command)
+  command = prompt.select(" ", skills << "Go Back")
+  if get_user_skills(name).include?(command)
+   puts "You already have this skill listed as a strength."
+   "You already have this skill listed as a strength.".play
+   update_weakness(name)
+ elsif command == "Go Back"
+     update_info(name)
+   else
+   User.find_by(name: name).update(weakness: command)
+ end
   menu_screen(name)
 
   destroy_matches(name)
   create_matches(name)
 end
+
 
 def destroy_matches(name)
   Match.where(user_id: User.find_by(name: name).id).destroy_all
@@ -108,9 +139,15 @@ def display_buddies(name)
   system "clear"
   if helpers(name).empty?
     puts "Sorry, no matches were found."
+    "Sorry, no matches were found.".play
   else
-    puts "Your recommended study buddies are:"
-    helpers(name).each { |helper| puts helper.name.capitalize unless helper.name == name}
+    study_buddies = []
+    puts "Your recommended study buddies for #{User.find_by(name: name).weakness} are: 🤓"
+    helpers(name).each do |helper|
+      puts helper.name.capitalize unless helper.name == name
+      study_buddies << helper.name.capitalize unless helper.name == name
+    end
+    "Your recommended study buddies for #{User.find_by(name: name).weakness} are #{study_buddies}".play
   end
   menu_screen(name)
 end
@@ -129,7 +166,6 @@ def create_matches(name)
     end
   end
 end
-
 
 def new_user(name)
   puts " "
