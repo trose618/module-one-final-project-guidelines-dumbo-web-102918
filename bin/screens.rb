@@ -114,16 +114,16 @@ def update_weakness(name)
   "What skill are you least comfortable with?".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
-  command = prompt.select(" ", skills << "Go Back")
+  command = prompt.select(" ", skills << "None"<< "Go Back")
   if get_user_skills(name).include?(command)
-   puts "You already have this skill listed as a strength."
-   "You already have this skill listed as a strength.".play
-   update_weakness(name)
- elsif command == "Go Back"
-     update_info(name)
-   else
-   User.find_by(name: name).update(weakness: command)
- end
+    puts "You already have this skill listed as a strength."
+    "You already have this skill listed as a strength.".play
+    update_weakness(name)
+  elsif command == "Go Back"
+    update_info(name)
+  else
+    User.find_by(name: name).update(weakness: command)
+  end
   menu_screen(name)
 
   destroy_matches(name)
@@ -138,8 +138,9 @@ end
 def display_buddies(name)
   system "clear"
   if helpers(name).empty?
-    puts "Sorry, no matches were found."
-    "Sorry, no matches were found.".play
+    thumbsup
+    puts "Sorry, no matches were found because you have no weakness."
+    "Sorry, no matches were found because you have no weakness.".play
   else
     study_buddies = []
     puts "Your recommended study buddies for #{User.find_by(name: name).weakness} are: 🤓"
@@ -154,6 +155,7 @@ end
 
 def helpers(name)
   wkn = Skill.find_by(name: User.find_by(name: name).weakness)
+  return [] if wkn == nil
   str_users = UserSkill.where(skill_id: wkn.id)
   str_users.map {|str_user| User.find_by(id: str_user.user_id)}
 end
@@ -169,14 +171,39 @@ end
 
 def new_user(name)
   puts " "
+  puts "Press space to select the skill(s) you are most comfortable with."
+  "Press space to select the skills you are most comfortable with.".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
-  choices = prompt.multi_select("What skills are you comfortable with now?", skills)
-  prompt2 = TTY::Prompt.new
-  wkn = prompt2.select("What skill are you least comfortable with?", ["Ruby Fundamentals", "API/JSON", "Object Oriented Ruby", "SQL", "ORMs/ActiveRecord"])
-  User.create(name: name, weakness: wkn)
-  choices.each do |choice|
-    UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
+  choices = prompt.multi_select(" ", skills)
+  if choices.empty?
+    puts "Please select at least one skill."
+    "Please select at least one skill".play
+    new_user(name)
+  elsif Skill.all.size == choices.size
+    User.create(name: name, weakness: "None")
+    choices.each do |choice|
+      UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
+    end
+  else
+    User.create(name: name, weakness: "None")
+    choices.each do |choice|
+      UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
+    end
+    wkn = create_weakness(name)
+    while choices.include?(wkn)
+      puts "You already have this skill listed as a strength."
+      "You already have this skill listed as a strength.".play
+      wkn = create_weakness(name)
+    end
+    User.find_by(name: name).update(weakness: wkn)
   end
+end
 
+def create_weakness(name)
+  prompt = TTY::Prompt.new
+  puts "What skill are you least comfortable with?"
+  "What skill are you least comfortable with?".play
+  skills = Skill.all.map { |skill| skill.name}
+  command = prompt.select(" ", skills << "None")
 end

@@ -1,7 +1,11 @@
 require_relative '../config/environment'
 require_relative './screens'
+require_relative './ascii'
 require 'pry'
 require 'tts'
+
+
+books
 
 welcome
 
