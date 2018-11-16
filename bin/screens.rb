@@ -6,10 +6,13 @@ end
 
 def get_name
   puts " "
-  prompt = TTY::Prompt.new
-  name = prompt.ask("What is your first name?", "What is your first name?".play)
+  name = nil
+  while name == nil
+    prompt = TTY::Prompt.new
+    name = prompt.ask("What is your first name?", "What is your first name?".play)
+  end
   "Hi #{name}!".play
-  name
+  name.downcase
 end
 
 def user_exist?(name)
@@ -42,11 +45,11 @@ def menu_screen(name)
   puts "What would you like to do? You can update your skills, display study matches, or quit."
   "What would you like to do?".play
   prompt = TTY::Prompt.new
-  command = prompt.select(" ", ["Update Skills", "Display Matches", "Quit"])
+  command = prompt.select(" ", ["Update Skills", "Recommend Study Buddies", "Quit"])
   case command
   when "Update Skills"
     update_info(name)
-  when "Display Matches"
+  when "Recommend Study Buddies"
     display_buddies(name)
   when "Quit"
     puts "Session Ended"
@@ -82,8 +85,10 @@ end
 def update_strength(name)
   system "clear"
   puts " "
-  puts "What skills are you comfortable with now? You can choose more than one. (Use arrow keys, press Space to select and Enter to finish)"
-  "What skills are you comfortable with now?".play
+  puts "Press SPACEBAR to select the skill(s) you are most comfortable with."
+  puts "You can choose more than one, press ENTER when done."
+  puts "To go back to the main menu, press ENTER without selecting any choices."
+  "Press SPACEBAR to select the skill(s) you are most comfortable with.".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
   choices = prompt.multi_select(" ", skills)
@@ -98,16 +103,30 @@ def update_strength(name)
       menu_screen(name)
     end
   else
+    User.find_by(name: name).update(weakness: "None") if Skill.all.size == choices.size
     destroy_str_associations(name)
     choices.each do |choice|
       UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
     end
   end
-  menu_screen(name)
+  puts "Would you like to update your weakness?"
+  "Would you like to update your weakness?".play
+  prompt2 = TTY::Prompt.new
+  command2 = prompt.select(" ", ["Yes", "No"])
+  if command2 == "Yes"
+    update_weakness(name)
+  else command2 == "No"
+    if choices.include?(User.find_by(name: name).weakness)
+      puts "You have #{User.find_by(name: name).weakness} listed as both a strength and a weakness. Please update your weakness."
+      "You have #{User.find_by(name: name).weakness} listed as both a strength and a weakness. Please update your weakness.".play
+      update_weakness(name)
+    else
+    menu_screen(name)
+    end
+  end
 end
 
 def update_weakness(name)
-  #display_skills(name)
   system "clear"
   puts " "
   puts "What skill are you least comfortable with?"
@@ -115,10 +134,13 @@ def update_weakness(name)
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
   command = prompt.select(" ", skills << "None"<< "Go Back")
-  if get_user_skills(name).include?(command)
-    puts "You already have this skill listed as a strength."
-    "You already have this skill listed as a strength.".play
-    update_weakness(name)
+  if get_user_skills(name).include?(command) and command != "None"
+    puts "You also have #{command} listed as a strength."
+    puts "Would you like to update your strengths?"
+    "You also have #{command} listed as a strength. Would you like to update your strengths?".play
+    prompt2 = TTY::Prompt.new
+    prompt2 = prompt2.select(" ", ["Yes", "No"])
+    prompt2 == "Yes" ? update_strength(name) : update_weakness(name)
   elsif command == "Go Back"
     update_info(name)
   else
@@ -137,10 +159,13 @@ end
 
 def display_buddies(name)
   system "clear"
-  if helpers(name).empty?
+  if User.find_by(name: name).weakness == "None"
     thumbsup
-    puts "Sorry, no matches were found because you have no weakness."
-    "Sorry, no matches were found because you have no weakness.".play
+    puts "Sorry, no matches were found because you are a coding god (You selected 'None' as your weakness)."
+    "Sorry, no matches were found because you are a coding god.".play
+  elsif helpers(name).empty?
+    puts "Sorry, we found no one who is strong with #{User.find_by(name: name).weakness} from your mod or there is not enough data at this time (#{User.all.size} users)."
+    "Sorry, we found no one who is strong with #{User.find_by(name: name).weakness} from your mod or there is not enough data at this time (#{User.all.size} users).".play
   else
     study_buddies = []
     puts "Your recommended study buddies for #{User.find_by(name: name).weakness} are: 🤓"
@@ -171,15 +196,16 @@ end
 
 def new_user(name)
   puts " "
-  puts "Press space to select the skill(s) you are most comfortable with."
-  "Press space to select the skills you are most comfortable with.".play
+  puts "Press SPACEBAR to select the skill(s) you are most comfortable with."
+  puts "You can choose more than one, press ENTER when done."
+  "Press SPACEBAR to select the skills you are most comfortable with.".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
   choices = prompt.multi_select(" ", skills)
   if choices.empty?
     puts "Please select at least one skill."
     "Please select at least one skill".play
-    new_user(name)
+    update_strength(name)
   elsif Skill.all.size == choices.size
     User.create(name: name, weakness: "None")
     choices.each do |choice|
@@ -192,9 +218,11 @@ def new_user(name)
     end
     wkn = create_weakness(name)
     while choices.include?(wkn)
-      puts "You already have this skill listed as a strength."
-      "You already have this skill listed as a strength.".play
-      wkn = create_weakness(name)
+      puts "You also have #{wkn} listed as a strength. Would you like to update your strengths?"
+      "You also have #{wkn} listed as a strength. Would you like to update your strengths?".play
+      prompt2 = TTY::Prompt.new
+      prompt2 = prompt2.select(" ", ["Yes", "No"])
+      prompt2 == "Yes" ? update_strength(name) : wkn = create_weakness(name)
     end
     User.find_by(name: name).update(weakness: wkn)
   end

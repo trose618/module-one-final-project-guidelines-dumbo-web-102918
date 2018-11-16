@@ -14,25 +14,27 @@ $$    $$/  $$  $$/ $$    $$/ $$    $$ |$$    $$ |      $$    $$/ $$    $$/ $$   
                                         $$$$$$/                                                 $$$$$$/
 "
   puts " "
-  puts "                      ....``
-                    `/ssssssssooo++///::--...``
-                   :sssssssssssssssssssssssssso`
-                 -ossssssssssssssssssssssssss+.
-               .+sssssssssssssssssssssssssss/-:-
-             `/ssssssssssssssssssssssssssss:-:/`
-            :sssssssssssssssssssssssssssso:-/:
-          -osssssssssssssssssssssssssyyso--+-
-        .+ssssssssssssssssssssssyyyyyys+.-+.
-      `/ssssssssssssssssssyyyyyyyyyyys/.:+`
-     :sssssssssssssssyyyyyyyyyyyyyyys-.//`
-   .ossssssssssyyyyyyyyyyyyyyyyyyyyo--+:
- `+sssssssyyyyyyyyyyyyyyyyyyyyyyyy+.-+.
- .o++++oooosssyyyyyyyyyyyyyyyyyyy/.:+.
- `///+++////////+++ooossyyyyyyys:.//`
-     ``.-::////////////////+++/-.+:`
-            ```.--:://////////--o-
-                    ```..-::://+.
-                             ``                   "
+  puts "             :hhys+-         `:+syhh.
+      yhhs+. :hhhhhhh+`    .ohhhhhhh. .+shhy
+++:.  hhhhhy :hhhhhhhhy.  :hhhhhhhhh. yhhhhh  .:++
+mmmm- hhhhhy :hhhhhhhhhy`.hhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh:ohhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy :hhhhhhhhhh+shhhhhhhhhh. yhhhhh -mmmm
+mmmm- hhhhhy .//+oyhhhhh+shhhhhyo+//` yhhhhh -mmmm
+mmmm- hhhhhy       ./yhh+shhy/`       yhhhhh -mmmm
+mmmm- hhhhhhhhyso/.  `+h+sh/   -/osyhhhhhhhh -mmmm
+mmmm- /-..```..-:/oso- /+s- -oso/:-..```..:/ -mmmm
+mmmm/:+oosooo++//:-.`:/----/:`.-://++ooosoo+:/mmmm
+mmhs+:.`      `-:::--.``  ``.-::::.`      `.:+shmm
+/.                -/o+`    `+o:-                ./
+
+"
 
 end
 
