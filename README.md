@@ -1,3 +1,27 @@
+# ReadMe
+## Overview: Study Buddy is a command line app used to help people in the same mod find help amongst each other regarding specific topics they may be struggling with.
+
+### Initial Set Up:
+
+1. Run 'rake db:migrate'
+
+2. Run 'rake db:seed' for a fresh database
+
+3. In the seed file, create or delete skills objects which represent a different skill or topic. To avoid any issues, it's best to seed the entire database including deleting the current users and matches.
+
+### Running the app
+
+1. Run `bundle install`
+
+2. Inside the top level of the project directory, run `ruby bin/run.rb` to run the project.
+
+3. Follow in-app instructions closely (once you run the app).
+
+4. You can set multiple strengths at a time by selecting with the space key and moving with the arrow keys, then pressing enter when done.
+
+
+
+
 # Module One Final Project Guidelines
 
 Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
