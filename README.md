@@ -1,7 +1,7 @@
 # ReadMe
-## Overview: Study Buddy is a command line app used to help people in the same mod find help amongst each other regarding specific topics they may be struggling with.
+## Study Buddy is a command line app used to help people in the same mod find help amongst each other regarding specific topics they may be struggling with.
 
-### Initial Set Up:
+### Initial Set Up
 
 1. Run 'rake db:migrate'
 
@@ -18,6 +18,8 @@
 3. Follow in-app instructions closely (once you run the app).
 
 4. You can set multiple strengths at a time by selecting with the space key and moving with the arrow keys, then pressing enter when done.
+
+### MIT License
 
 
 

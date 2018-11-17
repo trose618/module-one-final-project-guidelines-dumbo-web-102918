@@ -69,3 +69,32 @@ MMMMMMMMMMMMMMMMMMMMNdhyo+++++++/:----------:sMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMNNmmmmhs+/:::::/+sdMMMMM"
 puts " "
 end
+
+def sad_face
+  puts "                `.:/+oooooooo+/:.`
+            `:+so/-.`        `.-/os+:`
+         `/so:`                    `:os/`
+       .+s:`                          `:s+.
+     `+s-         ``         `           -s+`
+    :y/          :yy        /y+`           /y-
+   /y.        ./syo.        `/yy+-`         .s/
+  /s`    `++syyy+.            `/syyso+-      `y/
+ -y.      :::-``:/:`          :+o+::::.       .y-
+ s/           -yyyyy.        oyyyyy`           /s
+-y`           oyyyyy+        yyyyyy-           `y-
++s            -yyyyy.        -yyyy+             s+
++o             `::-`           .-`              o+
++s                                              s+
+-y`                                            `y-
+ s/                                            /s
+ -y.                  `....`                  .y-
+  /s`             -/oyyyysyyys/-             `s/
+   /s.          :yyy+:.     .:oyy+.         .s/
+    :y/         /+:`           `/yyo       /y:
+     `+s-                        `//     -s+`
+       .+s:`                          `:s+.
+         `/so:`                    `:os/`
+            `:+so/-.`        `.-/os+:`
+                `.:/+oooooooo+/:.`                "
+puts " "
+end

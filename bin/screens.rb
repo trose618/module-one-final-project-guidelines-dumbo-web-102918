@@ -7,9 +7,11 @@ end
 def get_name
   puts " "
   name = nil
-  while name == nil
+  prompt = TTY::Prompt.new
+  name = prompt.ask("What is your first name?", "What is your first name?".play)
+  while name == nil || name.length > 15 || name.scan(/[`1234567890!@#$%^&*()_+{}\[\]:;'"\/\\?><.,]/).any?
     prompt = TTY::Prompt.new
-    name = prompt.ask("What is your first name?", "What is your first name?".play)
+    name = prompt.ask("That's cool, but what is your first name?", "That's cool, but what is your first name?".play)
   end
   "Hi #{name}!".play
   name.downcase
@@ -109,8 +111,8 @@ def update_strength(name)
       UserSkill.create(user_id: User.find_by(name: name).id, skill_id: Skill.find_by(name: choice).id)
     end
   end
-  puts "Would you like to update your weakness?"
-  "Would you like to update your weakness?".play
+  puts "Would you like to update your weakness (#{User.find_by(name: name).weakness})?"
+  "Would you like to update your weakness (#{User.find_by(name: name).weakness})?".play
   prompt2 = TTY::Prompt.new
   command2 = prompt.select(" ", ["Yes", "No"])
   if command2 == "Yes"
@@ -129,8 +131,8 @@ end
 def update_weakness(name)
   system "clear"
   puts " "
-  puts "What skill are you least comfortable with?"
-  "What skill are you least comfortable with?".play
+  puts "What skill are you least comfortable with (currently #{User.find_by(name: name).weakness})?"
+  "What skill are you least comfortable with (currently #{User.find_by(name: name).weakness})?".play
   prompt = TTY::Prompt.new
   skills = Skill.all.map { |skill| skill.name}
   command = prompt.select(" ", skills << "None"<< "Go Back")
@@ -164,6 +166,7 @@ def display_buddies(name)
     puts "Sorry, no matches were found because you are a coding god (You selected 'None' as your weakness)."
     "Sorry, no matches were found because you are a coding god.".play
   elsif helpers(name).empty?
+    sad_face
     puts "Sorry, we found no one who is strong with #{User.find_by(name: name).weakness} from your mod or there is not enough data at this time (#{User.all.size} users)."
     "Sorry, we found no one who is strong with #{User.find_by(name: name).weakness} from your mod or there is not enough data at this time (#{User.all.size} users).".play
   else
@@ -195,6 +198,8 @@ def create_matches(name)
 end
 
 def new_user(name)
+  newbie = User.create(name: name, weakness: "None")
+  new = UserSkill.create(user_id: newbie.id, skill_id: 1)
   puts " "
   puts "Press SPACEBAR to select the skill(s) you are most comfortable with."
   puts "You can choose more than one, press ENTER when done."
