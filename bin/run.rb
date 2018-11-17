@@ -1,7 +1,11 @@
 require_relative '../config/environment'
 require_relative './screens'
+require_relative './ascii'
 require 'pry'
 require 'tts'
+
+
+books
 
 welcome
 
@@ -11,5 +15,5 @@ if user_exist?(name)
   menu_screen(name)
 else
   new_user(name)
-  menu_screen(name)
+  display_buddies(name)
 end
